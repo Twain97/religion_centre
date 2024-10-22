@@ -1,0 +1,45 @@
+<nav class="">
+    <div class="w-full text-center py-10 bg-blue-600 text-white">
+        <h1 class="w-full text-3xl font-bold  border-red-500"> Welcome to the Digital Compendium</h1>
+        <h3 class="text-lg mt-5"> Religious Centre in Ekiti</h3>
+    </div>
+    <ul>
+        <li class="flex justify-around bg-blue-800">
+            <% if (!user) { %>
+                <h1 class="my-auto font-bold text-white text-lg md:text-lg">RELIGION CENTRE.</h1>
+                <div class=" flex" >
+                    <%= user%>
+                    <a href="/" class="  hover:bg-blue-900 text-white p-4 m-0"> ARTICLES</a>
+                    <a href="/events" class="  hover:bg-blue-900 text-white p-4 "> EVENTS</a>
+                    <a href="/loginMember" class="  hover:bg-blue-900 text-white p-4 m-0"> LOGIN</a>
+                    <a href='/signUpMember' class="  hover:bg-blue-900 text-white p-4 "> REGISTER</a>
+                    <a href="/about" class=" hover:bg-blue-900 text-white p-4 "> ABOUT US</a>
+                    <a href="/loginAdmin" class="  hover:bg-blue-900 text-white p-4 m-0"> ADMIN LOGIN</a>
+                    <!-- <a href="/logout" class="  hover:bg-blue-900 text-white p-4 m-0"> LOGOUT</a> -->
+                </div>
+                
+            <% }else{ %>
+                <h1 class="my-auto font-bold text-white text-lg md:text-xl">Welcome, <%= user.name %></h1>
+                <% if (user.role == 'member') { %>
+                <div class=" flex" >
+                    <a href="/member" class="  hover:bg-blue-900 text-white p-4 m-0"> HOME</a>
+                    <a href="/" class="  hover:bg-blue-900 text-white p-4 "> ARTICLES</a>
+                    <a href="/events" class="  hover:bg-blue-900 text-white p-4 "> EVENTS</a>
+                    <a href="/about" class="  hover:bg-blue-900 text-white p-4 "> ABOUT US</a>
+                    <a href="/logout" class="  hover:bg-blue-900 text-white p-4 m-0"> LOGOUT</a>
+                </div>
+                <% } else if (user.role === 'admin') { %>
+                <div class=" flex" >
+                    <a href="/admin" class="  hover:bg-blue-900 text-white p-4 "> DASHBOARD</a>
+                    <a href="/events" class="  hover:bg-blue-900 text-white p-4 "> EVENTS</a>
+                    <a href="/createEvent" class="  hover:bg-blue-900 text-white p-4 m-0">ADD EVENT</a>
+                    <a href="/logout" class="  hover:bg-blue-900 text-white p-4 m-0"> LOGOUT</a>
+                </div>
+                    <% } %>    
+                <% } %>
+
+                
+        </li>
+        
+    </ul>
+</nav>

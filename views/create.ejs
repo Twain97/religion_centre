@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs') %>
+<div class="w-full h-fit  border-green-500 flex">
+    <div class="md:w-2/4 bg-slate-200 px-4 py-5 border-red-300 my-5 mx-auto rounded-lg shadow-lg">
+        <div class="text-xl flex space-x-1">
+            <!-- <img src="/logo.png" alt="" class="w-8"> -->
+            <h1> Create Article.</h1>
+        </div>
+        <div class="">
+            <fieldset class="border border-slate-500 p-5 rounded-lg">
+                <legend class="ml-2 text-blue-500 font-semibold">Create your Article.</legend>
+                <form>
+                    <p class="mb-2 text-sm">Please fill in the form to create your Article.</p>
+                
+                    <div class=" border-red-500 my-1 p-2 w-full bg-white rounded-t-md flex">
+                        <label for="Title">Title: </label>
+                        <input type="text" name="title" id="title" required class="rounded-lg w-3/4 h-8 mx-auto border">
+                        <div class="title error"></div>
+                    </div>
+
+                    <div class=" border-red-500 my-1 p-2 w-full bg-white rounded-t-md flex">
+                        <label for="Snippet">Snippet: </label>
+                        <input type="text" name="snippet" id="snippet" required class="rounded-lg w-3/4 h-8 mx-auto border">
+                        <div class="snippet error"></div>
+                    </div>
+
+                    <div class=" border-red-500 my-1 p-2 w-full bg-white rounded-t-md flex">
+                        <label for="Title">Body: </label>
+                        <textarea name="body" id="body" required class="rounded-lg w-3/4 h-20 mx-auto border"></textarea>
+                        <div class="body error"></div>
+                    </div>
+
+                    <div class=" border-red-500 my-1 p-2 w-full rounded-b-md bg-white flex">
+                        <label for="author">Author (Your Name):</label>
+                        <input type="text" name="author" id="author" value="<%= user.name %>" disabled class="rounded-lg w-3/4 h-8 mx-auto border" >
+                        <div class="name error"></div>
+                    </div>
+
+                    <div class="justify-self-end mt-5 w-fit border-red-500 bg-blue-700 px-2 py-1 rounded-md shadow-lg">
+                        <input type="submit" value="Create Article" class="text-white">
+                        <i class='fas fa-sign-in-alt text-white' ></i>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+    </div>
+</div>  
+    
+    <%- include('./partials/footer.ejs') %>
+
+
+
+    <script>
+        //error messages in div tags
+        const form = document.querySelector('form')
+
+
+        form.addEventListener('submit', async (e)=>{
+            e.preventDefault();
+        
+
+            const author = form.author.value;
+            const title= form.title.value;
+            const snippet = form.snippet.value;
+            const body = form.body.value;
+            try{
+                const res = await fetch('/blogs', {
+                    method:'POST',
+                    body:JSON.stringify({
+                        author,
+                        title,
+                        snippet,
+                        body,
+                        status:'pending'
+                    }),
+                    headers:{'Content-Type': 'application/json'}
+                });
+
+                const data = await res.json();
+                console.log(data)
+                alert('Article Created!')
+
+                //direct home if appointment is created
+                if(data.blog){
+                    location.assign('/member')
+                }
+            }catch(err){
+                console.log(err)
+            }
+        })
+    </script>
+</body>
+</html>

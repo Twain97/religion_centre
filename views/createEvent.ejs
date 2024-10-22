@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs') %>
+<div class="w-full h-fit  border-green-500 flex">
+    <div class="md:w-2/4 bg-slate-200 px-4 py-5 border-red-300 my-5 mx-auto rounded-lg shadow-lg">
+        <div class="text-xl flex space-x-1">
+            <!-- <img src="/logo.png" alt="" class="w-8"> -->
+            <h1> Create Event.</h1>
+        </div>
+        <div class="">
+            <fieldset class="border border-slate-500 p-5 rounded-lg">
+                <legend class="ml-2 text-blue-500 font-semibold">Create Event.</legend>
+                <form>
+                    <p class="mb-2 text-sm">Please fill in the form to create A New Event.</p>
+                
+                    <div class=" border-red-500 my-1 p-2 w-full bg-white rounded-t-md flex">
+                        <label for="name">Name: </label>
+                        <input type="text" name="name" id="name" required class="rounded-lg w-3/4 h-8 mx-auto border">
+                        <div class="name error"></div>
+                    </div>
+
+                    <div class=" border-red-500 my-1 p-2 w-full bg-white rounded-t-md flex">
+                        <label for="description">Description: </label>
+                        <textarea name="description" id="description" required class="rounded-lg w-3/4 h-24 mx-auto border" ></textarea>
+                        <div class="description error"></div>
+                    </div>
+
+                    <div class=" border-red-500 my-1 p-2 w-full bg-white rounded-t-md flex">
+                        <label for="startDate">Start Date/time: </label>
+                        <input type="datetime-local" name="startDate" id="startDate" required class="rounded-lg w-3/4 h-8 mx-auto border">
+                        <div class="startDate error"></div>
+                    </div>
+
+                    <div class=" border-red-500 my-1 p-2 w-full bg-white rounded-t-md flex">
+                        <label for="endDate">End Date/time: </label>
+                        <input type="datetime-local" name="endDate" id="endDate" required class="rounded-lg w-3/4 h-8 mx-auto border">
+                        <div class="EndDate error"></div>
+                    </div>
+
+                    <div class=" border-red-500 my-1 p-2 w-full bg-white rounded-t-md flex">
+                        <label for="location">Location: </label>
+                        <input type="text" name="location" id="location" required class="rounded-lg w-3/4 h-8 mx-auto border">
+                        <div class="location error"></div>
+                    </div>
+
+                    <div class=" border-red-500 my-1 p-2 w-full rounded-b-md bg-white flex">
+                        <label for="organizer">Organiser:</label>
+                        <input type="text" name="organizer" id="organizer"  class="rounded-lg w-3/4 h-8 mx-auto border" >
+                        <div class="name error"></div>
+                    </div>
+
+                    <div class=" border-red-500 my-1 p-2 w-full rounded-b-md bg-white flex">
+                        <label for="status">Status:</label>
+                        <select name="status" id="status" class="rounded-lg w-3/4 h-8 mx-auto border">
+                            <option value="upcoming">Upcoming</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                        <div class="name error"></div>
+                    </div>
+                    
+                    <div class="justify-self-end mt-5 w-fit border-red-500 bg-blue-700 px-2 py-1 rounded-md shadow-lg">
+                        <input type="submit" value="Create Event" class="text-white">
+                        <i class='fas fa-sign-in-alt text-white' ></i>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+    </div>
+</div>  
+    
+    <%- include('./partials/footer.ejs') %>
+
+
+
+    <script>
+        //error messages in div tags
+        const form = document.querySelector('form')
+
+
+        form.addEventListener('submit', async (e)=>{
+            e.preventDefault();
+        
+
+            const name = form.name.value
+            const description = form.description.value
+            const startDate = form.startDate.value
+            const endDate = form.endDate.value
+            const location = form.location.value
+            const organizer = form.organizer.value
+
+            try{
+                const res = await fetch('/events', {
+                    method:'POST',
+                    body:JSON.stringify({
+                        name,
+                        description,
+                        startDate,
+                        endDate,
+                        location,
+                        organizer,
+                        status:'upcoming'
+                    }),
+                    headers:{'Content-Type': 'application/json'}
+                });
+
+                const data = await res.json();
+                console.log(data)
+                alert('Event Created!')
+
+                //direct home if appointment is created
+                window.location.assign('/events')
+                if(data.Event){
+                    location.assign('/admin')
+                }
+            }catch(err){
+                console.log(err)
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs') %>
+    <div class="flex flex-col h-ht6 rounded-xl my-5 py-10  mx-auto pb-2 w-fit md:w-wd7 lg:w-wd8 xl:w-wd45 bg-slate-100 shadow-sm">
+             
+        <div class="flex z-50 my-auto  md:py-2 w-full h-full border-blue-500">
+        <div class="w-full h-full py-2 flex flex-col px-2 border-red-500 mx-auto space-y-10">
+            <div class="w-full   space-y-2 flex flex-col ">
+            <h2 class="text-slate-800 mx-auto font-bold text-lg md:text-2xl uppercase">My Articles.</h2>
+            <% if (user && Blogs) { %>
+            <table class="">
+                <tr class="border-black rounded-t-xl border-2 md:border-4 font-bold text-center text-sm md:text-lg uppercase">
+                    <% if (Blogs.length > 0 ) { %>
+                    <td>#</td>
+                    <td>Article ID</td>
+                    <td>Article Title</td>
+                    <td>Article Date</td>
+                    <td>Article Status</td>
+                    <td >Action</td>
+                </tr>
+
+                    <% var index = 1 %>
+                    <% Blogs.forEach(Blog => { %>
+                        
+                        <% var createdAt = new Date(Blog.createdAt) %>
+                        <% var createdDate = createdAt.toLocaleDateString('en-US') %>
+                        
+                        <% if (user.name === Blog.author) { %>
+                           <tr>
+                               <td class="border-black border-2 md:border-4 w-fit uppercase py-2"><%= index %></td>
+                               <td class="border-black border-2 md:border-4 w-fit uppercase py-2 cursor-pointer"><a href="/blogs/<%= Blog._id%>"><%= Blog._id %> %> </a></td>
+                               <td class="border-black border-2 md:border-4 w-fit uppercase py-2"><%= Blog.title%></td>
+                               <td class="border-black border-2 md:border-4 w-fit uppercase py-2"><%= createdDate %></td>
+                               <td class="border-black border-2 md:border-4 w-fit uppercase py-2"><%= Blog.status %></td></td>
+                               <td class="border-black border-2 space-x-1 flex md:border-4 uppercase p-2">
+                                   <button class="bg-blue-500 hover:bg-blue-700 m-auto text-white font-bold py-2 px-4 rounded" onclick="deleteBlog('<%= Blog._id %>')">Delete</button">
+                                </td>
+                           </tr>
+                         
+                           <% index++; %>
+                        <% } %>
+                       <% }) %>
+                <% } else{ %>
+                    <p>no doctor</p>
+                <% } %>
+               
+            </table>
+            <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+   
+
+    <%- include('./partials/footer.ejs') %>
+</body>
+</html>
+
+<script>
+    async function deleteBlog(id) {
+  try {
+    if (confirm("Are you sure you want to delete this Article?")) {
+      const res = await fetch(`/blogs/${id}`, {
+        method: 'DELETE'
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert(`Blog ID(${id}) deleted successfully!`);
+        window.location.reload();
+      } else {
+        throw new Error(data.message || 'Could not delete blog.');
+      }
+    }
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+}
+
+
+
+
+</script>

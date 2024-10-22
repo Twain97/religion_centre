@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs') %>
+    <form >
+        <% if (!user) { %>
+            <h1 class=" text-center text-3xl font-bold">Event</h1>
+        <% }else if (user.role == 'admin') { %>
+            <h1 class="bg-red-400 text-center text-3xl font-bold"> Update Event</h1>
+        <% } else{ %>
+            <h1 class=" text-center text-3xl font-bold w-full"> Event.</h1>
+        <% } %>
+        <div class="w-full h-fit  border-green-500 flex">
+            <div class="md:w-8/12 bg-slate-200 px-4 py-5 border-red-300 mx-auto rounded-lg shadow-lg">
+                <div class=" flex flex-col space-y-3">
+
+                    <div>
+                        <% if (!user) { %>
+                            <p class="hidden"> <%= event.name %></p>
+                        <% } else{%> 
+                            <input type="text" name="id" id="id" value="<%= event._id%>" class="hidden" disabled>
+                        <% } %>
+                       
+                    </div>
+
+                    <% if (!user) { %>
+                        <h2 class="w-full text-center text-2xl font-bold uppercase bg-slate-200"> <%= event.name%></h2>
+
+                    <% } else if (user.role == 'member') { %>
+                        <h2 class="w-full text-center text-2xl font-bold uppercase bg-slate-200"> <%= event.name%></h2>
+
+                    <% } else if (user.role == 'admin') { %>
+                        <h2> <input type="text" name="name" id="name" value="<%= event.name%>" class="w-full text-center text-2xl font-bold uppercase bg-slate-200"></h2>
+                    
+                    <% } %>
+                    
+                    <% var createdAt = new Date(event.startDate) %> 
+                    <% var startDate = createdAt.toLocaleDateString('en-US') %>
+                    <% var startTime = createdAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) %>
+
+                    <% var updatedAt = new Date(event.endDate) %> 
+                    <% var endDate = updatedAt.toLocaleDateString('en-US') %> 
+                    <% var endTime = updatedAt.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) %> 
+                        
+
+
+                    <% if (!user) { %>
+                        <p> <span class="font-bold"> Start Date:</span><%= startDate %> at <%= startTime %></p>
+                    <% }else if (user.role == 'member') { %>
+                        <p> <span class="font-bold"> Start Date:</span><%= startDate %> at <%= startTime %></p>
+                    <% } else if (user.role == 'admin') { %>
+                        <p> <span class="font-bold"> Start Date:</span><input type="datetime-local" name="startDate" id="startDate" value="<%= event.startDate%>" class=" bg-slate-200"></p>
+                    <% } %>
+                    
+                    <% if (!user) { %>
+                        <p> <span class="font-bold"> End Date:</span><%= endDate %> at <%= endTime %></p>
+                    <% } else if (user.role == 'member') { %>
+                        <p> <span class="font-bold"> End Date:</span><%= endDate %> at <%= endTime %></p>
+                    <% } else if (user.role == 'admin') { %>
+                        <p> <span class="font-bold"> End Date:</span><input type="datetime-local" name="endDate" id="endDate" value="<%= event.endDate%>" class=" bg-slate-200"></p>
+                    <% } %>
+
+                    <% if (!user) { %>
+                        <p> <span class="font-bold"> Location:</span><%= event.location%></p>
+                    <% }else if (!user.role == 'member') { %>
+                        <p> <span class="font-bold"> Location:</span><%= event.location%></p>
+                    <% } else if (user.role == 'admin') { %>
+                        <p><span class="font-bold">Location: </span><input type="text" name="location" id="location" value="<%= event.location%>" class=" bg-slate-200"></p>
+                    <% } %>
+                    
+                    <% if (!user) { %>
+                        <p> <span class="font-bold"> Description</span><%= event.description%></p>
+                    <% } else if (user.role == 'member') { %>
+                        <p> <span class="font-bold"> Description</span><%= event.description%></p>
+                    <% } else if (user.role == 'admin') { %>
+                        <p><span class="font-bold">Description: </span><textarea name="description" id="description" class="w-full h-full bg-slate-200" ><%= event.description%></textarea></p>
+                    <% } %>
+
+                   
+                    <div class="flex flex-col space-y-2">
+                        <% if (!user) { %>
+                            <p> 
+                                <span class="font-bold">Status:</span><%= event.status%>                            
+                            </p>
+                        
+                        <% } else if (user.role == 'admin') { %>
+                            <p><span class="font-bold">Status:</span>
+                                <select name="status" id="status" class="bg-slate-200">
+                               <option value="<%= event.status %>"> <%= event.status %></option>
+                               <% if (event.status == 'upcoming') { %>
+                                   <option value="ongoing">Ongoing</option>
+                                   <option value="completed">completed</option>
+                                   <option value="cancelled">Cancelled</option>
+                               <% } else if (event.status == 'ongoing') { %>
+                                   <option value="upcoming">upcoming</option>
+                                   <option value="completed">completed</option>
+                                   <option value="cancelled">Cancelled</option>
+                               <% }else{ %>
+                                   <option value="upcoming">upcoming</option>
+                                   <option value="ongoing">Ongoing</option>
+                                   <option value="cancelled">Cancelled</option>
+                               <% } %>
+                               
+                           </select></p>
+                           <% }else if(user.role == 'member') { %>
+                            <p> 
+                                <span class="font-bold">Status:</span><%= event.status%>                            </p>
+                        <% } %>
+                        
+                        <% if (!user) { %>
+                            <p> <span class="font-bold">Organizer:</span><%= event.organizer%></p>
+                        <% }else if (user.role == 'member') { %>
+                            <p> <span class="font-bold">Organizer:</span><%= event.organizer%></p>
+                        <% } else if (user.role == 'admin') { %>
+                            <p> <span class="font-bold">Organizer:</span> <input type="text" name="organizer" id="organizer" value="<%= event.organizer%>" class="bg-slate-200" disabled></p>    
+                        <% } %>
+
+                        
+                    </div>
+                    <% if (!user) { %>
+
+                    <% }else if (user.role == 'admin') { %>
+                        <div class=" flex justify-end align-bottom border-red-500 ">
+                            <div class=" w-fit border-red-500 bg-blue-700 px-2 py-1 rounded-md shadow-lg text-white">
+                                <input type="submit" value="Update Event">
+                            </div>
+                            <div class=" w-fit ml-5 border-red-500 bg-red-700 px-2 text-white py-1 rounded-md shadow-lg">
+                                <a class="delete" data-doc="<%=event._id%>" class=" ">Delete</a>
+                            </div>
+                        </div>
+                    <% } %>
+                
+                </div>
+            </div>
+        </div>
+        
+    </form>
+
+
+   
+
+
+   
+    
+
+
+    <%- include('./partials/footer.ejs') %>
+
+    <script>
+        //Update Event
+    const form = document.querySelector('form')
+
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent default form submission
+
+        try{
+            const id = form.id.value;
+            const name = form.name.value
+            const description = form.description.value
+            const startDate = form.startDate.value
+            const endDate = form.endDate.value
+            const location = form.location.value
+            const organizer = form.organizer.value
+            const status = form.status.value
+
+            const res = await fetch(`/events`, {
+                method:'PUT',
+                body:JSON.stringify({
+                    id, 
+                    name, 
+                    description, 
+                    startDate, 
+                    endDate, 
+                    location, 
+                    organizer, 
+                    status
+                }),
+                headers:{'Content-Type': 'application/json'}
+            })
+
+            const data = await res.json();
+
+            console.log(data)
+            window.location.assign('/events')
+            alert('Event updated!')
+        }catch(err){
+            console.log(err)
+        }
+        
+    });
+
+
+        const trashCan = document.querySelector('a.delete')
+
+        trashCan.addEventListener('click', (e)=>{
+           if(confirm( "Are you sure you want to delete this Event?")){
+                const endPoint = `/events/${trashCan.dataset.doc}`
+
+                fetch(endPoint, {
+                    method:'DELETE'
+                }).then(response=>
+                    response.json()
+                ).then(data=>
+                window.location.assign('/events')
+                ).catch((err)=>{
+                    console.log(err)
+                })
+            }
+        })
+    </script>
+</body>
+</html>
