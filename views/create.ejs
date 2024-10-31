@@ -3,17 +3,17 @@
     <%- include('./partials/head.ejs') %>
 <body>
     <%- include('./partials/nav.ejs') %>
-<div class="w-full h-fit  border-green-500 flex">
+<div class="w-full h-fit mt-20 border-green-500 flex">
     <div class="md:w-2/4 bg-slate-200 px-4 py-5 border-red-300 my-5 mx-auto rounded-lg shadow-lg">
         <div class="text-xl flex space-x-1">
             <!-- <img src="/logo.png" alt="" class="w-8"> -->
-            <h1> Create Article.</h1>
+            <h1> Create Compendium.</h1>
         </div>
         <div class="">
             <fieldset class="border border-slate-500 p-5 rounded-lg">
-                <legend class="ml-2 text-blue-500 font-semibold">Create your Article.</legend>
+                <legend class="ml-2 text-blue-500 font-semibold">Write a new Compendium.</legend>
                 <form>
-                    <p class="mb-2 text-sm">Please fill in the form to create your Article.</p>
+                    <p class="mb-2 text-sm">Please fill in the form appropriately.</p>
                 
                     <div class=" border-red-500 my-1 p-2 w-full bg-white rounded-t-md flex">
                         <label for="Title">Title: </label>
@@ -40,7 +40,7 @@
                     </div>
 
                     <div class="justify-self-end mt-5 w-fit border-red-500 bg-blue-700 px-2 py-1 rounded-md shadow-lg">
-                        <input type="submit" value="Create Article" class="text-white">
+                        <input type="submit" value="Click To Create" class="text-white">
                         <i class='fas fa-sign-in-alt text-white' ></i>
                     </div>
                 </form>
@@ -81,7 +81,7 @@
 
                 const data = await res.json();
                 console.log(data)
-                alert('Article Created!')
+                alert('Compendum created successfully!')
 
                 //direct home if appointment is created
                 if(data.blog){

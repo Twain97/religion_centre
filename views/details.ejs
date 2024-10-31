@@ -3,16 +3,16 @@
     <%- include('./partials/head.ejs') %>
 <body>
     <%- include('./partials/nav.ejs') %>
-    <form >
+    <form class="mt-20" >
         <% if (!user) { %>
-            <h1 class=" text-center text-3xl font-bold"> ARTICLE.</h1>
+            <h1 class=" text-center text-3xl font-bold"> COMPENDIUM.</h1>
         <% } else if (user.name == blog.author){ %>
-            <h1 class="bg-red-400 text-center text-lg font-bold w-full"> Update Article.</h1>
+            <h1 class="bg-green-400 text-center text-lg font-bold w-full"> Update Compendium.</h1>
         <% } else if (user.nam == 'admin') { %>
-            <h1 class=" text-center text-3xl font-bold"> ARTICLE.</h1>
+            <h1 class=" text-center text-3xl font-bold"> COMPENDIUM.</h1>
         <% } %>
-        <div class="w-full h-fit  border-green-500 flex">
-            <div class="md:w-8/12 bg-slate-200 px-4 py-5 border-red-300 mx-auto rounded-lg shadow-lg">
+        <div class="w-full h-ht7 px-4 pb-4 border-green-500 flex flex-col py-5">
+            <div class="w-full h-full m-auto bg-slate-200 px-4 py-5 border-red-300 mx-auto rounded-lg shadow-lg">
                 <div class=" flex flex-col space-y-2">
 
                     <div>
@@ -63,29 +63,25 @@
                             <p> <span class="font-bold">Author:</span> <input type="text" name="author" id="author" value="<%= blog.author%>" class="bg-slate-200" disabled></p>    
                         </div>
                         <%} %>
-
-
-                  
-
-                    <% if (!user) { %>
-                        <h2 class="w-full text-lg font-bold uppercase bg-slate-200 hidden"> <%= blog.snippet%></h2>
-                    <% } else if (user.role == 'member' && user.name != blog.author) { %>
-                        <p> <textarea name="body" id="body" class="w-full h-full bg-slate-200 hidden" ><%= blog.body%></textarea></p>
-                    <% } else if ( user.name == blog.author) { %>
-                        <div class=" flex justify-around border-red-500 ">
-                            <div class=" w-fit border-red-500 bg-blue-700 px-2 py-1 rounded-md shadow-lg text-white">
-                                <input type="submit" value="Update Blog">
-                            </div>
-                            <div class=" w-fit border-red-500 bg-red-700 text-white px-2 py-1 rounded-md shadow-lg">
-                                <a class="delete" data-doc="<%=blog._id%>" >Delete</a>
-                            </div>
-                        </div>
-                                
-                        
-                    <% } %>
-                
                 </div>
+               
             </div>
+            <% if (!user) { %>
+                <h2 class="w-full text-lg font-bold uppercase bg-slate-200 hidden"> <%= blog.snippet%></h2>
+            <% } else if (user.role == 'member' && user.name != blog.author) { %>
+                <p> <textarea name="body" id="body" class="w-full h-full bg-slate-200 hidden" ><%= blog.body%></textarea></p>
+            <% }else if ( user.name == blog.author) { %>
+                <div class="mt-5 flex justify-around border-red-500 ">
+                    <div class=" w-fit border-red-500 bg-blue-700 px-2 py-1 rounded-md shadow-lg text-white">
+                        <input type="submit" value="Update">
+                    </div>
+                    <div class=" w-fit border-red-500 bg-red-700 text-white px-2 py-1 rounded-md shadow-lg">
+                        <a class="delete" data-doc="<%=blog._id%>" >Delete</a>
+                    </div>
+                </div>
+                        
+                
+            <% } %>
         </div>
         
     </form>
@@ -98,6 +94,9 @@
     <%- include('./partials/footer.ejs') %>
 
     <script>
+       
+
+
         //Update Blog
     const form = document.querySelector('form')
 
@@ -132,7 +131,7 @@
 
             console.log(data)
             window.location.assign('/')
-            alert('Article updated!')
+            alert('Information updated successfully!')
         }catch(err){
             console.log(err)
         }

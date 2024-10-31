@@ -3,7 +3,7 @@
     <%- include('./partials/head.ejs') %>
 <body>
     <%- include('./partials/nav.ejs') %>
-<div class="flex flex-col h-fit rounded-xl my-5 py-10  mx-auto pb-2 w-fit md:w-wd7 lg:w-wd8 xl:w-wd45 bg-slate-100 shadow-sm">
+<div class="flex mt-20  mb-10 flex-col h-fit rounded-xl py-10  mx-auto pb-2 w-fit md:w-wd8 lg:w-wd8 xl:w-wd45 bg-slate-100 shadow-sm">
             
     <div class="flex  flex-col z-50 my-auto  md:py-2 w-full h-full border-blue-500">
     <div class="w-full h-full py-2 flex flex-col px-2  border-red-500 mx-auto space-y-10">
@@ -11,24 +11,24 @@
         <div class="w-full   space-y-2 flex flex-col border-green-500 ">
             <h2 class="text-slate-800 mx-auto font-bold text-lg md:text-2xl uppercase">Members.</h2>
             <table class="">
-                <tr class="border-black rounded-t-xl border-2 md:border-4 font-bold text-center text-sm md:text-lg uppercase">
+                <tr class="border-black rounded-t-xl border-2 md:border-4  font-bold text-center text-sm md:text-lg uppercase">
                     <% if (members.length > 0) { %> %>
                         <td>#</td>
                         <td>member Name</td>
                         <td>Age</td>
                         <td>Gender</td>
-                        <td >Contact Information</td>
+                        <td >Contact Info</td>
                         <td>Delete User</td>
                 </tr>
                     <% var index = 1 %>
                             <% members.forEach(member =>{ %>
-                                <tr>
-                                    <td class="border-black border-2 md:border-4 w-fit uppercase p-1"><%= index++ %></td>
-                                    <td class="border-black border-2 md:border-4 w-fit uppercase p-1"><%= member.name %></td>
-                                    <td class="border-black border-2 md:border-4 w-fit uppercase p-1"><%= member.age %></td>
-                                    <td class="border-black border-2 md:border-4 w-fit uppercase p-1"><%= member.gender %></td>
-                                    <td class="border-black border-2 md:border-4 w-fit uppercase p-1"><%= member.contactInformation %></td>
-                                    <td class="border-black border-2 flex md:border-4 w-full uppercase p-1">
+                                <tr class="text-center">
+                                    <td class="border-black   w-fit uppercase p-1"><%= index++ %></td>
+                                    <td class="border-black   w-fit uppercase p-1"><%= member.name %></td>
+                                    <td class="border-black   w-fit uppercase p-1"><%= member.age %></td>
+                                    <td class="border-black   w-fit uppercase p-1"><%= member.gender %></td>
+                                    <td class="border-black   w-fit uppercase p-1"><%= member.contactInformation %></td>
+                                    <td class="border-black flex  w-full uppercase p-1">
                                         <button class="bg-blue-500 mx-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="deleteUser('<%= member._id %>')">Delete User</button">
                                     </td>
                                 </tr>
@@ -43,20 +43,20 @@
         </div>    
     
         <div class="w-full   space-y-2 flex flex-col ">
-            <h2 class="text-slate-800 mx-auto font-bold text-lg md:text-2xl uppercase">Articles.</h2>
+            <h2 class="text-slate-800 mx-auto font-bold text-lg md:text-2xl uppercase">COMPENDIUMS.</h2>
             <table class="">
-                <tr class="border-black rounded-t-xl border-2 md:border-4 font-bold text-center text-sm md:text-lg uppercase">
+                <tr class="border-black rounded-t-xl  border-2 md:border-4 font-bold text-center text-sm md:text-lg uppercase">
                 <% if (user && blogs) { %>
                     <% if (blogs.length > 0 ) { %>
                         <td>#</td>
-                        <td >Article ID</td>
+                        <td>ID</td>
                         <td>Title</td>
-                        <td>Authors's Name</td>
-                        <td>ArticleDate</td>
-                        <td>Article updated </td>
-                        <td> Status</td>
+                        <td>Author Name</td>
+                        <td>Created Date</td>
+                        <td>Updated Date</td>
+                        <td>Status</td>
                         <td>Update status</td>
-                        <td>Delete Article</td>
+                        <td>Delete</td>
                 </tr>
                 <% var index = 1 %>
                 <% blogs.forEach(blog => { %>
@@ -67,13 +67,13 @@
                     
                        <tr>
                         <form>
-                            <td class="border-black border-2 md:border-4 w-fit uppercase p-1"><%= index %></td>
-                            <td class="border-black border-2 md:border-4 w-fit uppercase p-1"><%= blog._id %></td>
-                            <td class="border-black border-2 md:border-4 w-fit uppercase p-1"><%= blog.title %></td>
-                            <td class="border-black border-2 md:border-4 w-fit uppercase p-1"><%= blog.author%></td>
-                            <td class="border-black border-2 md:border-4 w-fit uppercase p-1"><%= createdDate %></td>
-                            <td class="border-black border-2 md:border-4 w-fit uppercase p-1"><%= updatedDate%></td>
-                            <td class="border-black border-2 md:border-4 w-fit uppercase p-1">
+                            <td class="border-black   w-fit uppercase p-1"><%= index %></td>
+                            <td class="border-black   w-fit uppercase p-1"><%= blog._id %></td>
+                            <td class="border-black   w-fit uppercase p-1"><%= blog.title %></td>
+                            <td class="border-black   w-fit uppercase p-1"><%= blog.author%></td>
+                            <td class="border-black   w-fit uppercase p-1"><%= createdDate %></td>
+                            <td class="border-black   w-fit uppercase p-1"><%= updatedDate%></td>
+                            <td class="border-black   w-fit uppercase p-1">
                                 <select name="status" id="status">
                                     <option value="<%= blog.status %>"> <%= blog.status %></option>
                                     <% if (blog.status === 'pending') { %>
@@ -87,11 +87,11 @@
                                     
                                 </select>
                             </td>
-                            <td class="border-black border-2 md:border-4 w-fit uppercase p-1">
+                            <td class="border-black   w-fit uppercase p-1">
                                 <input type="submit" value="Submit" class="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold m-auto py-2 px-4 rounded">
                               
                             </td>
-                            <td class="border-black border-2 md:border-4 w-fit uppercase p-1">
+                            <td class="border-black   w-fit uppercase p-1">
                                 <button class="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="deleteBlog('<%= blog._id %>')">Delete</button">
                             </td>
                         </form>
@@ -121,7 +121,7 @@
       const data = await res.json();
 
       if (res.ok) {
-        alert(`Blog ID(${id}) deleted successfully!`);
+        alert(`Compendium with ID(${id}) deleted successfully!`);
         window.location.reload();
       } else {
         throw new Error(data.message || 'Could not delete blog.');
@@ -136,7 +136,7 @@
 
 async function deleteUser(id) {
   try {
-    if (confirm("Are you sure you want to delete this user?")) {
+    if (confirm("Are you sure you want to delete this?")) {
       const res = await fetch(`/members/${id}`, {
         method: 'DELETE'
       });
