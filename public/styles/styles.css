@@ -502,6 +502,9 @@ video {
 .fixed {
   position: fixed;
 }
+.absolute {
+  position: absolute;
+}
 .top-2 {
   top: 0.5rem;
 }
