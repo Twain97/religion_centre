@@ -46,33 +46,33 @@
 
 
                     <% if (!user) { %>
-                        <p> <span class="font-bold"> Start Date:</span><%= startDate %> at <%= startTime %></p>
+                        <p> <span class="font-bold"> Start Date: </span><%= startDate %> <span class="font-bold"> Time:</span> <%= startTime %></p>
                     <% }else if (user.role == 'member') { %>
-                        <p> <span class="font-bold"> Start Date:</span><%= startDate %> at <%= startTime %></p>
+                        <p> <span class="font-bold"> Start Date: </span><%= startDate %> <span class="font-bold"> Time:</span>  <%= startTime %></p>
                     <% } else if (user.role == 'admin') { %>
-                        <p> <span class="font-bold"> Start Date:</span><input type="datetime-local" name="startDate" id="startDate" value="<%= event.startDate%>" class=" bg-slate-200"></p>
+                        <p> <span class="font-bold"> Start Date: </span><input type="datetime-local" name="startDate" id="startDate" value="<%= event.startDate%>" class=" bg-slate-200"></p>
                     <% } %>
                     
                     <% if (!user) { %>
-                        <p> <span class="font-bold"> End Date:</span><%= endDate %> at <%= endTime %></p>
+                        <p> <span class="font-bold"> End Date: </span><%= endDate %> <span class="font-bold"> Time:</span>  <%= endTime %></p>
                     <% } else if (user.role == 'member') { %>
-                        <p> <span class="font-bold"> End Date:</span><%= endDate %> at <%= endTime %></p>
+                        <p> <span class="font-bold"> End Date: </span><%= endDate %> <span class="font-bold"> Time:</span>  <%= endTime %></p>
                     <% } else if (user.role == 'admin') { %>
-                        <p> <span class="font-bold"> End Date:</span><input type="datetime-local" name="endDate" id="endDate" value="<%= event.endDate%>" class=" bg-slate-200"></p>
+                        <p> <span class="font-bold"> End Date: </span><input type="datetime-local" name="endDate" id="endDate" value="<%= event.endDate%>" class=" bg-slate-200"></p>
                     <% } %>
 
                     <% if (!user) { %>
-                        <p> <span class="font-bold"> Location:</span><%= event.location%></p>
+                        <p> <span class="font-bold"> Location: </span><%= event.location%></p>
                     <% }else if (!user.role == 'member') { %>
-                        <p> <span class="font-bold"> Location:</span><%= event.location%></p>
+                        <p> <span class="font-bold"> Location: </span><%= event.location%></p>
                     <% } else if (user.role == 'admin') { %>
                         <p><span class="font-bold">Location: </span><input type="text" name="location" id="location" value="<%= event.location%>" class=" bg-slate-200"></p>
                     <% } %>
                     
                     <% if (!user) { %>
-                        <p> <span class="font-bold"> Description</span><%= event.description%></p>
+                        <p> <span class="font-bold"> Description: </span><%= event.description%></p>
                     <% } else if (user.role == 'member') { %>
-                        <p> <span class="font-bold"> Description</span><%= event.description%></p>
+                        <p> <span class="font-bold"> Description: </span><%= event.description%></p>
                     <% } else if (user.role == 'admin') { %>
                         <p><span class="font-bold">Description: </span><textarea name="description" id="description" class="w-full h-full bg-slate-200" ><%= event.description%></textarea></p>
                     <% } %>
@@ -81,11 +81,11 @@
                     <div class="flex flex-col space-y-2">
                         <% if (!user) { %>
                             <p> 
-                                <span class="font-bold">Status:</span><%= event.status%>                            
+                                <span class="font-bold">Status: </span><%= event.status%>                            
                             </p>
                         
                         <% } else if (user.role == 'admin') { %>
-                            <p><span class="font-bold">Status:</span>
+                            <p><span class="font-bold">Status: </span>
                                 <select name="status" id="status" class="bg-slate-200">
                                <option value="<%= event.status %>"> <%= event.status %></option>
                                <% if (event.status == 'upcoming') { %>
